@@ -65,6 +65,13 @@ namespace Demo.ConfigurationModels
                   .HasColumnType("varchar(20)")
                   .IsRequired();
             });
+
+            builder.HasOne(E => E.EmpDepatrment)
+                   .WithMany()
+                   .HasForeignKey(E => E.DeptId)
+                   .IsRequired()
+                   .OnDelete(DeleteBehavior.NoAction);
+
             #endregion
         }
     }

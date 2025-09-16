@@ -4,6 +4,7 @@ using Demo.DataDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    partial class CompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250916211720_AddRelationBetweenEmployeeWorkInDept")]
+    partial class AddRelationBetweenEmployeeWorkInDept
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace Demo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Car", (string)null);
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("Demo.Models.Department", b =>
@@ -61,7 +64,7 @@ namespace Demo.Migrations
                     b.HasIndex("DeptManagerId")
                         .IsUnique();
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("Demo.Models.Employee", b =>
@@ -130,7 +133,7 @@ namespace Demo.Migrations
                     b.HasIndex("CarId")
                         .IsUnique();
 
-                    b.ToTable("EmployeeCar", (string)null);
+                    b.ToTable("EmployeeCar");
                 });
 
             modelBuilder.Entity("Demo.Models.Department", b =>
@@ -163,7 +166,7 @@ namespace Demo.Migrations
 
                             b1.HasIndex("EmployeeEmpId");
 
-                            b1.ToTable("Department", (string)null);
+                            b1.ToTable("Department");
 
                             b1.WithOwner()
                                 .HasForeignKey("DepartmentId");
@@ -213,7 +216,7 @@ namespace Demo.Migrations
 
                             b1.HasKey("EmployeeEmpId");
 
-                            b1.ToTable("Employee02", (string)null);
+                            b1.ToTable("Employee02");
 
                             b1.WithOwner("Employee")
                                 .HasForeignKey("EmployeeEmpId");

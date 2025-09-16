@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,12 @@ namespace Demo.Models
 
         //Navigation Property Address RelationShip
         public Address EmpAddress { get; set; } = null!;
+
+        [InverseProperty (nameof(Department.Employees))]
+        public Department EmpDepatrment { get; set; }=null!;
+
+        //[ForeignKey(nameof(EmpDepatrment))]
+        public int DeptId { get; set; }
 
     }
 }

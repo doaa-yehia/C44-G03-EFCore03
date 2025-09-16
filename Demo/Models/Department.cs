@@ -18,5 +18,8 @@ namespace Demo.Models
         public Employee Manager { get; set; }
 
         public Address DeptAddress { get; set; } = null!;
+
+        [InverseProperty(nameof(Employee.EmpDepatrment))]
+        public ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
     }
 }
