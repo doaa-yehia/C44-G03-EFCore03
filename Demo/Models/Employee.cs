@@ -26,8 +26,11 @@ namespace Demo.Models
 
         public string userName { get => Email.Split('@')[0]; }
 
-        //Navigation Property
-        public Department ManageDepartment { get; set; }
+        //Navigation Property Manage RelationShip
+        public Department? ManageDepartment { get; set; }
+
+        //Navigation Property Address RelationShip
+        public Address EmpAddress { get; set; } = null!;
 
     }
 }

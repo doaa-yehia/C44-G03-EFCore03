@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    [Migration("20250916000624_FluintAPIRelation02")]
-    partial class FluintAPIRelation02
+    [Migration("20250916022920_OwnedByFluintAPI")]
+    partial class OwnedByFluintAPI
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,7 +84,7 @@ namespace Demo.Migrations
 
                     b.HasKey("EmpId");
 
-                    b.ToTable("employees", t =>
+                    b.ToTable("Employee02", null, t =>
                         {
                             t.HasCheckConstraint("Check_Age_Range", "[Age] Not in (30,35,25)");
 
@@ -102,13 +102,83 @@ namespace Demo.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.OwnsOne("Demo.Models.Address", "DeptAddress", b1 =>
+                        {
+                            b1.Property<int>("DepartmentId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("City")
+                                .HasColumnType("varchar(50)")
+                                .HasColumnName("DeptCity");
+
+                            b1.Property<string>("Country")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("EmployeeEmpId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Street")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("DepartmentId");
+
+                            b1.HasIndex("EmployeeEmpId");
+
+                            b1.ToTable("Department");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DepartmentId");
+
+                            b1.HasOne("Demo.Models.Employee", "Employee")
+                                .WithMany()
+                                .HasForeignKey("EmployeeEmpId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+
+                            b1.Navigation("Employee");
+                        });
+
+                    b.Navigation("DeptAddress")
+                        .IsRequired();
+
                     b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("Demo.Models.Employee", b =>
                 {
-                    b.Navigation("ManageDepartment")
+                    b.OwnsOne("Demo.Models.Address", "EmpAddress", b1 =>
+                        {
+                            b1.Property<int>("EmployeeEmpId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("varchar(20)");
+
+                            b1.Property<string>("Country")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Street")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("EmployeeEmpId");
+
+                            b1.ToTable("Employee02");
+
+                            b1.WithOwner("Employee")
+                                .HasForeignKey("EmployeeEmpId");
+
+                            b1.Navigation("Employee");
+                        });
+
+                    b.Navigation("EmpAddress")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Demo.Models.Employee", b =>
+                {
+                    b.Navigation("ManageDepartment");
                 });
 #pragma warning restore 612, 618
         }

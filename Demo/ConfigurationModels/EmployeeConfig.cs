@@ -14,7 +14,7 @@ namespace Demo.ConfigurationModels
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
             #region mapping
-            //builder.ToTable("EmployeeTable");
+            builder.ToTable("Employee02");
             builder.HasKey(E => E.EmpId);
             builder.Property(E => E.EmpId)
                    .UseIdentityColumn(10, 10);
@@ -51,7 +51,20 @@ namespace Demo.ConfigurationModels
             #endregion
 
             #region RelationShips
+            //Address RelatioShip
 
+            //builder.HasOne(E => E.EmpAddress)
+            //       .WithOne(A => A.Employee)
+            //       .HasForeignKey<Address>(A => A.EmpId);
+
+            ///owend Relationship
+            builder.OwnsOne(E => E.EmpAddress, OA =>
+            {
+                OA.Property(A => A.City)
+                  .HasColumnName("EmpCity")
+                  .HasColumnType("varchar(20)")
+                  .IsRequired();
+            });
             #endregion
         }
     }

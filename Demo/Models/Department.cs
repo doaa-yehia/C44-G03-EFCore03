@@ -16,5 +16,7 @@ namespace Demo.Models
         public int DeptManagerId { get; set; }
         //Navigation property
         public Employee Manager { get; set; }
+
+        public Address DeptAddress { get; set; } = null!;
     }
 }

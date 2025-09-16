@@ -17,6 +17,16 @@ namespace Demo.ConfigurationModels
                    .WithOne(E => E.ManageDepartment)
                    .HasForeignKey<Department>(D => D.DeptManagerId)
                    .OnDelete(DeleteBehavior.Restrict);
+
+
+            ///Owend
+            builder.OwnsOne(D => D.DeptAddress, OA =>
+            {
+                OA.Property(A => A.City)
+                  .HasColumnName("DeptCity")
+                  .HasColumnType("varchar(50)");
+            });
+
         }
     }
 }

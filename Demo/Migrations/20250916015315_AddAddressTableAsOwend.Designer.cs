@@ -4,6 +4,7 @@ using Demo.DataDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    partial class CompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250916015315_AddAddressTableAsOwend")]
+    partial class AddAddressTableAsOwend
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,45 +102,6 @@ namespace Demo.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("Demo.Models.Address", "DeptAddress", b1 =>
-                        {
-                            b1.Property<int>("DepartmentId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("City")
-                                .HasColumnType("varchar(50)")
-                                .HasColumnName("DeptCity");
-
-                            b1.Property<string>("Country")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<int>("EmployeeEmpId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Street")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("DepartmentId");
-
-                            b1.HasIndex("EmployeeEmpId");
-
-                            b1.ToTable("Department");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DepartmentId");
-
-                            b1.HasOne("Demo.Models.Employee", "Employee")
-                                .WithMany()
-                                .HasForeignKey("EmployeeEmpId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Employee");
-                        });
-
-                    b.Navigation("DeptAddress")
-                        .IsRequired();
-
                     b.Navigation("Manager");
                 });
 
@@ -149,9 +113,7 @@ namespace Demo.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("EmpCity");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Country")
                                 .HasColumnType("nvarchar(max)");

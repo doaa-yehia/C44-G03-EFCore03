@@ -21,8 +21,13 @@ namespace Demo.DataDbContext
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             #endregion
 
+            //Address Table 
+            //modelBuilder.Entity<Address>().ToTable("Employee02").HasKey(A => A.EmpId);
+
+
+
         }
-        public DbSet<Employee> employees { get; set; }
+        //public DbSet<Employee> employees { get; set; }
     }
 
 }

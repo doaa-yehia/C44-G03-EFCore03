@@ -4,6 +4,7 @@ using Demo.DataDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    partial class CompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250916013544_AddAddressTable")]
+    partial class AddAddressTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,25 @@ namespace Demo.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Demo.Models.Address", b =>
+                {
+                    b.Property<int>("EmpId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmpId");
+
+                    b.ToTable("Employee02", (string)null);
+                });
 
             modelBuilder.Entity("Demo.Models.Department", b =>
                 {
@@ -91,6 +113,17 @@ namespace Demo.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Demo.Models.Address", b =>
+                {
+                    b.HasOne("Demo.Models.Employee", "Employee")
+                        .WithOne("EmpAddress")
+                        .HasForeignKey("Demo.Models.Address", "EmpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Demo.Models.Department", b =>
                 {
                     b.HasOne("Demo.Models.Employee", "Manager")
@@ -99,82 +132,14 @@ namespace Demo.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("Demo.Models.Address", "DeptAddress", b1 =>
-                        {
-                            b1.Property<int>("DepartmentId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("City")
-                                .HasColumnType("varchar(50)")
-                                .HasColumnName("DeptCity");
-
-                            b1.Property<string>("Country")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<int>("EmployeeEmpId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Street")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("DepartmentId");
-
-                            b1.HasIndex("EmployeeEmpId");
-
-                            b1.ToTable("Department");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DepartmentId");
-
-                            b1.HasOne("Demo.Models.Employee", "Employee")
-                                .WithMany()
-                                .HasForeignKey("EmployeeEmpId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Employee");
-                        });
-
-                    b.Navigation("DeptAddress")
-                        .IsRequired();
-
                     b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("Demo.Models.Employee", b =>
                 {
-                    b.OwnsOne("Demo.Models.Address", "EmpAddress", b1 =>
-                        {
-                            b1.Property<int>("EmployeeEmpId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("EmpCity");
-
-                            b1.Property<string>("Country")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Street")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("EmployeeEmpId");
-
-                            b1.ToTable("Employee02");
-
-                            b1.WithOwner("Employee")
-                                .HasForeignKey("EmployeeEmpId");
-
-                            b1.Navigation("Employee");
-                        });
-
                     b.Navigation("EmpAddress")
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Demo.Models.Employee", b =>
-                {
                     b.Navigation("ManageDepartment");
                 });
 #pragma warning restore 612, 618
