@@ -39,5 +39,8 @@ namespace Demo.Models
         //[ForeignKey(nameof(EmpDepatrment))]
         public int DeptId { get; set; }
 
+        [InverseProperty (nameof(ProjectEmployee.Employee))]
+        public ProjectEmployee? EmpProject { get; set; }
+
     }
 }
