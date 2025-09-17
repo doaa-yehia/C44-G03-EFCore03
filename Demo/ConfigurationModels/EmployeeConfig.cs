@@ -69,7 +69,7 @@ namespace Demo.ConfigurationModels
             builder.HasOne(E => E.EmpDepatrment)
                    .WithMany()
                    .HasForeignKey(E => E.DeptId)
-                   .IsRequired()
+                   //.IsRequired()
                    .OnDelete(DeleteBehavior.NoAction);
 
             #endregion

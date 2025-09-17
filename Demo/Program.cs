@@ -29,6 +29,7 @@ namespace Demo
             //}
 
 
+            #region Many To Many
             //dbContext.Students.Add(new Student {
             //    StdName="Doaa",
             //});
@@ -64,7 +65,44 @@ namespace Demo
             //}
             //dbContext.SaveChanges();
 
-            //Console.WriteLine(std01?.StdName);
+            //Console.WriteLine(std01?.StdName); 
+            #endregion
+
+            #region Data Seeding
+
+            #region Manualy
+
+            //List<Project> projects = new List<Project>
+            //   {
+            //       new Project{Name="P01"},
+            //       new Project{Name="P02"},
+            //       new Project{Name="P03"},
+            //       new Project{Name="P04"},
+            //       new Project{Name="P05"}
+            //   };
+
+            //if (!dbContext.Set<Project>().Any())
+            //{
+            //    dbContext.Set<Project>().AddRange(projects);
+            //    dbContext.SaveChanges();
+            //}
+
+            #endregion
+
+            #region Dinamically
+
+           bool dataSeeded= CompanyDbContextSeeding.DataSeeding(dbContext);
+            if(dataSeeded)
+            {
+                Console.WriteLine("Seeded");
+            }
+            else
+            {
+                Console.WriteLine("Not Seeded");
+            }
+            #endregion
+
+            #endregion
 
         }
     }

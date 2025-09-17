@@ -4,6 +4,7 @@ using Demo.DataDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    partial class CompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250917034537_AlterDepartmentNullable")]
+    partial class AlterDepartmentNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace Demo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Car", (string)null);
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("Demo.Models.Course", b =>
@@ -52,7 +55,7 @@ namespace Demo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Demo.Models.Department", b =>
@@ -79,7 +82,7 @@ namespace Demo.Migrations
                         .IsUnique()
                         .HasFilter("[DeptManagerId] IS NOT NULL");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("Demo.Models.Employee", b =>
@@ -96,7 +99,7 @@ namespace Demo.Migrations
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DeptId")
+                    b.Property<int>("DeptId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -148,7 +151,7 @@ namespace Demo.Migrations
                     b.HasIndex("CarId")
                         .IsUnique();
 
-                    b.ToTable("EmployeeCar", (string)null);
+                    b.ToTable("EmployeeCar");
                 });
 
             modelBuilder.Entity("Demo.Models.Project", b =>
@@ -165,7 +168,7 @@ namespace Demo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Project", (string)null);
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("Demo.Models.ProjectEmployee", b =>
@@ -180,7 +183,7 @@ namespace Demo.Migrations
 
                     b.HasIndex("proId");
 
-                    b.ToTable("ProjectEmployee", (string)null);
+                    b.ToTable("ProjectEmployee");
                 });
 
             modelBuilder.Entity("Demo.Models.Student", b =>
@@ -197,7 +200,7 @@ namespace Demo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Demo.Models.StudentCourse", b =>
@@ -215,7 +218,7 @@ namespace Demo.Migrations
 
                     b.HasIndex("CrsId");
 
-                    b.ToTable("StudentCourse", (string)null);
+                    b.ToTable("StudentCourse");
                 });
 
             modelBuilder.Entity("Demo.Models.Department", b =>
@@ -247,7 +250,7 @@ namespace Demo.Migrations
 
                             b1.HasIndex("EmployeeEmpId");
 
-                            b1.ToTable("Department", (string)null);
+                            b1.ToTable("Department");
 
                             b1.WithOwner()
                                 .HasForeignKey("DepartmentId");
@@ -276,7 +279,8 @@ namespace Demo.Migrations
                     b.HasOne("Demo.Models.Department", "EmpDepatrment")
                         .WithMany()
                         .HasForeignKey("DeptId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.OwnsOne("Demo.Models.Address", "EmpAddress", b1 =>
                         {
@@ -296,7 +300,7 @@ namespace Demo.Migrations
 
                             b1.HasKey("EmployeeEmpId");
 
-                            b1.ToTable("Employee02", (string)null);
+                            b1.ToTable("Employee02");
 
                             b1.WithOwner("Employee")
                                 .HasForeignKey("EmployeeEmpId");

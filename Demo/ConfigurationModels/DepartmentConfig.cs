@@ -27,6 +27,18 @@ namespace Demo.ConfigurationModels
                   .HasColumnType("varchar(50)");
             });
 
+            //builder.HasData(
+            //    new Department() { Id = 10, DeptName = "Hr", DateOfCreation = new DateTime(2025, 1, 22), },
+            //    new Department() { Id = 20, DeptName = "It", DateOfCreation = new DateTime(2025, 1, 22) },
+            //    new Department() { Id = 50, DeptName = "Account", DateOfCreation = new DateTime(2025, 1, 22) },
+            //    new Department() { Id = 70, DeptName = "Analise", DateOfCreation = new DateTime(2025, 1, 22) },
+            //    new Department()
+            //    {
+            //        Id = 80,
+            //        DeptName = "Programing",
+            //        DateOfCreation = new DateTime(2025, 1, 22),
+            //        });
+
         }
     }
 }

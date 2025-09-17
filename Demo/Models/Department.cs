@@ -13,7 +13,7 @@ namespace Demo.Models
         public string DeptName { get; set; }
         public DateTime DateOfCreation { get; set; }
         [ForeignKey(nameof(Manager))]
-        public int DeptManagerId { get; set; }
+        public int? DeptManagerId { get; set; }
         //Navigation property
         public Employee Manager { get; set; }
 
