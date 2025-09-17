@@ -4,6 +4,7 @@ using Demo.DataDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    partial class CompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250917020538_AddStudentAndCoursesRelationShip")]
+    partial class AddStudentAndCoursesRelationShip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace Demo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("Demo.Models.Department", b =>
@@ -196,7 +199,7 @@ namespace Demo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("Demo.Models.StudentCourse", b =>
@@ -352,13 +355,13 @@ namespace Demo.Migrations
             modelBuilder.Entity("Demo.Models.StudentCourse", b =>
                 {
                     b.HasOne("Demo.Models.Course", "Course")
-                        .WithMany("Students")
+                        .WithMany("Courses")
                         .HasForeignKey("CrsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Demo.Models.Student", "Student")
-                        .WithMany("Courses")
+                        .WithMany("students")
                         .HasForeignKey("StdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -370,7 +373,7 @@ namespace Demo.Migrations
 
             modelBuilder.Entity("Demo.Models.Course", b =>
                 {
-                    b.Navigation("Students");
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("Demo.Models.Department", b =>
@@ -392,7 +395,7 @@ namespace Demo.Migrations
 
             modelBuilder.Entity("Demo.Models.Student", b =>
                 {
-                    b.Navigation("Courses");
+                    b.Navigation("students");
                 });
 #pragma warning restore 612, 618
         }

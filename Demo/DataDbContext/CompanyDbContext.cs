@@ -24,10 +24,13 @@ namespace Demo.DataDbContext
             //Address Table 
             //modelBuilder.Entity<Address>().ToTable("Employee02").HasKey(A => A.EmpId);
 
-
+            modelBuilder.Entity<StudentCourse>()
+                        .HasKey(SC => new { SC.StdId, SC.CrsId });
 
         }
         //public DbSet<Employee> employees { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Courses { get; set; }
     }
 
 }
