@@ -11,10 +11,10 @@ namespace Demo.Models
     {
         public int EmpId { get; set; }
         [InverseProperty(nameof(Employee.EmpProject))]
-        public Employee Employee { get; set; } = null!;
+        public virtual Employee Employee { get; set; } = null!;
 
         public int proId { get; set; }
         [InverseProperty (nameof(Project.ProjectEmployees))]
-        public Project Project { get; set; } = null!;
+        public virtual Project Project { get; set; } = null!;
     }
 }

@@ -14,12 +14,12 @@ namespace Demo.Models
         [ForeignKey(nameof(Student))]
         public int StdId { get; set; }
         [InverseProperty(nameof(Student.Courses))]
-        public Student Student { get; set; } = null!;
+        public virtual Student Student { get; set; } = null!;
 
         [ForeignKey (nameof(Course))]
         public int CrsId { get; set; }
 
-        public Course Course { get; set; } = null!;
+        public virtual Course Course { get; set; } = null!;
         public int Grade {  get; set; }
     }
 }

@@ -13,6 +13,6 @@ namespace Demo.Models
         public string Name { get; set; } = null!;
 
         [InverseProperty(nameof(ProjectEmployee.Project))]
-        public ICollection<ProjectEmployee> ProjectEmployees { get; set; }=new HashSet<ProjectEmployee>();
+        public virtual ICollection<ProjectEmployee> ProjectEmployees { get; set; }=new HashSet<ProjectEmployee>();
     }
 }

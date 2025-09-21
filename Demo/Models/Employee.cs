@@ -28,19 +28,19 @@ namespace Demo.Models
         public string userName { get => Email.Split('@')[0]; }
 
         //Navigation Property Manage RelationShip
-        public Department? ManageDepartment { get; set; }
+        public virtual Department? ManageDepartment { get; set; }
 
         //Navigation Property Address RelationShip
-        public Address EmpAddress { get; set; } = null!;
+        public virtual Address EmpAddress { get; set; } = null!;
 
         [InverseProperty (nameof(Department.Employees))]
-        public Department EmpDepatrment { get; set; }=null!;
+        public virtual Department EmpDepatrment { get; set; }=null!;
 
         //[ForeignKey(nameof(EmpDepatrment))]
         public int DeptId { get; set; }
 
         [InverseProperty (nameof(ProjectEmployee.Employee))]
-        public ProjectEmployee? EmpProject { get; set; }
+        public virtual ProjectEmployee? EmpProject { get; set; }
 
     }
 }

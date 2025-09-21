@@ -91,18 +91,229 @@ namespace Demo
 
             #region Dinamically
 
-           bool dataSeeded= CompanyDbContextSeeding.DataSeeding(dbContext);
-            if(dataSeeded)
-            {
-                Console.WriteLine("Seeded");
-            }
-            else
-            {
-                Console.WriteLine("Not Seeded");
-            }
+            //bool dataSeeded= CompanyDbContextSeeding.DataSeeding(dbContext);
+            // if(dataSeeded)
+            // {
+            //     Console.WriteLine("Seeded");
+            // }
+            // else
+            // {
+            //     Console.WriteLine("Not Seeded");
+            // }
             #endregion
 
             #endregion
+
+            #region Eager Loading
+
+            #region Ex01
+            //var emp01 = dbContext.Set<Employee>()
+            //                .FirstOrDefault(E => E.EmpId == 20);
+            //if (emp01 is not null)
+            //{
+            //    Console.WriteLine(emp01.Name);                //Doaa
+            //    Console.WriteLine($"Employee department= " +  //null
+            //        $"{emp01.EmpDepatrment?.DeptName}");
+            //}
+
+            //var emp02 = dbContext.Set<Employee>()
+            //                .Include(E => E.EmpDepatrment)
+            //                .FirstOrDefault(E => E.EmpId == 20);
+            //if (emp02 is not null)
+            //{
+            //    Console.WriteLine(emp02.Name);                //Doaa
+            //    Console.WriteLine($"Employee department= " +  //Hr
+            //        $"{emp02.EmpDepatrment?.DeptName}");
+            //}
+
+            #endregion
+
+            #region Ex02
+
+            //var student = dbContext.Set<Student>()
+            //                    .Include(S => S.Courses)
+            //                    .FirstOrDefault(S => S.Id == 1);
+            //if (student is not null)
+            //{
+            //    Console.WriteLine($"CR ID = {student.Courses?.CrsName}");//null
+            //}
+
+            //var student2 = dbContext.Set<Student>()
+            //                    .Include(S => S.Courses)
+            //                    .ThenInclude(SC => SC.Course)
+            //                    .FirstOrDefault(S => S.Id == 1);
+            //if (student2 is not null)
+            //{
+            //        Console.WriteLine($"CR ID = {student2.Courses?.CrsName}");
+
+            //}
+            #endregion
+
+            #endregion
+
+            #region Explicit loading
+
+            #region EX01
+
+            //var emp03 = dbContext.Set<Employee>()
+            //                .FirstOrDefault(E => E.EmpId == 20);
+            //if (emp03 is not null)
+            //{
+            //    Console.WriteLine(emp03.Name);
+            //    dbContext.Entry(emp03)
+            //             .Reference(E => E.EmpDepatrment)
+            //             .Load();
+            //    Console.WriteLine($"Employee department= {emp03.EmpDepatrment.DeptName}");
+            //}
+
+            #endregion
+
+            #region Ex02
+            //var dept = dbContext.Set<Department>()
+            //              .FirstOrDefault(D => D.Id == 1);
+            //if (dept is not null)
+            //{
+            //    Console.WriteLine(dept.DeptName);
+            //    dbContext.Entry(dept)
+            //             .Collection(D => D.Employees)
+            //             .Query().Where(E=>E.Age>25)
+            //             .Load();
+            //    Console.WriteLine($"Employee department= {dept.Employees}");
+            //    foreach (var emp in dept.Employees)
+            //    {
+            //        Console.WriteLine($"Employee Name= {emp.Name}");
+            //    }
+            //}
+
+
+            #endregion
+
+            #endregion
+
+            #region Lazy loading
+
+            #region Ex01
+
+            //var emp03 = dbContext.Set<Employee>()
+            //                .FirstOrDefault(E => E.EmpId == 20);
+            //if (emp03 is not null)
+            //{
+            //    Console.WriteLine(emp03.Name);
+
+            //    Console.WriteLine($"Employee department= {emp03.EmpDepatrment.DeptName}");
+            //}
+            #endregion
+
+            #region Ex02
+
+            //var dept = dbContext.Set<Department>()
+            //              .FirstOrDefault(D => D.Id == 1);
+            //if (dept is not null)
+            //{
+            //    Console.WriteLine(dept.DeptName);
+
+            //    Console.WriteLine($"Employee department= {dept.Employees}");
+            //    foreach (var emp in dept.Employees)
+            //    {
+            //        Console.WriteLine($"Employee Name= {emp.Name}");
+            //    }
+            //}
+
+            #endregion
+
+            #endregion
+
+            #region Join Operator
+
+            #region Join()
+
+            #region EX01
+            //var deptName = dbContext.Set<Department>()
+            //            .Join(dbContext.Set<Employee>(),
+            //                  D => D.Id,
+            //                  E => E.DeptId,
+            //                  (D, E) => new
+            //                  {
+            //                      DeptName = D.DeptName,
+            //                      EmpName = E.Name
+            //                  }
+            //            );
+            //deptName = from D in dbContext.Set<Department>()
+            //           join E in dbContext.Set<Employee>()
+            //           on D.Id equals E.DeptId
+            //           select new
+            //           {
+            //               DeptName = D.DeptName,
+            //               EmpName = E.Name
+            //           };
+            //foreach (var item in deptName) Console.WriteLine(item); 
+            #endregion
+
+            #region EX02
+
+            //var DeptWithManager= dbContext.Set<Department>()
+            //                              .Join(dbContext.Set<Employee>(),
+            //                                    D => D.DeptManagerId,
+            //                                    E => E.EmpId,
+            //                                    (D, E) => new
+            //                                    {
+            //                                        DeptName = D.DeptName,
+            //                                        ManagerName = E.Name
+            //                                    }
+            //                              );
+            //DeptWithManager = from D in dbContext.Set<Department>()
+            //                  join E in dbContext.Set<Employee>()
+            //                  on D.DeptManagerId equals E.EmpId
+            //                  select new
+            //                  {
+            //                      DeptName = D.DeptName,
+            //                      ManagerName = E.Name
+            //                  };
+            //foreach (var item in DeptWithManager) Console.WriteLine(item);
+
+            #endregion
+
+            #endregion
+
+            #endregion
+
+            #region Group Join
+
+            #region Ex01
+
+            var Result = dbContext.Set<Department>()
+                                .GroupJoin(dbContext.Set<Employee>(),
+                                           D => D.Id,
+                                           E => E.DeptId,
+                                           (D, Employees) => new
+                                           {
+                                               DeptName = D.DeptName,
+                                               Employees = Employees
+                                           }
+                                );
+            Result = from D in dbContext.Set<Department>()
+                     join E in dbContext.Set<Employee>()
+                     on D.Id equals E.DeptId into EmployeesGroup
+                     select new
+                     {
+                         DeptName = D.DeptName,
+                         Employees = EmployeesGroup
+                     };
+
+            foreach (var group in Result)
+            {
+                Console.WriteLine($"Department Name = {group.DeptName}");
+                foreach (var emp in group.Employees)
+                {
+                    Console.WriteLine($"\tEmployee Name = {emp.Name}");
+                }
+                Console.WriteLine("===================================");
+            }
+
+            #endregion
+
+            #endregion
+
 
         }
     }
