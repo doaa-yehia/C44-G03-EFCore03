@@ -467,8 +467,29 @@ namespace Demo
 
             #endregion
 
+            #region Cross Join
+
+            //var res= dbContext.Set<Employee>()
+            //             .SelectMany(E => dbContext.Set<Department>()
+            //                         .Select(D => new
+            //                         {
+            //                             DeptName = D.DeptName,
+            //                             EmpName = E.Name
+            //                         }
+            //             ));
+            //res=from E in dbContext.Set<Employee>()
+            //     from D in dbContext.Set<Department>()
+            //     select new
+            //     {
+            //         DeptName = D.DeptName,
+            //         EmpName = E.Name
+            //     };
+            //foreach (var item in res) Console.WriteLine(item);
 
             #endregion
+
+
+                #endregion
 
         }
     }
