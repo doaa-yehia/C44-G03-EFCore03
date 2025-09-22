@@ -281,36 +281,73 @@ namespace Demo
 
             #region Ex01
 
-            var Result = dbContext.Set<Department>()
-                                .GroupJoin(dbContext.Set<Employee>(),
-                                           D => D.Id,
-                                           E => E.DeptId,
-                                           (D, Employees) => new
-                                           {
-                                               DeptName = D.DeptName,
-                                               Employees = Employees
-                                           }
-                                );
-            Result = from D in dbContext.Set<Department>()
-                     join E in dbContext.Set<Employee>()
-                     on D.Id equals E.DeptId into EmployeesGroup
-                     select new
-                     {
-                         DeptName = D.DeptName,
-                         Employees = EmployeesGroup
-                     };
+            //var Result = dbContext.Set<Department>()
+            //                    .GroupJoin(dbContext.Set<Employee>(),
+            //                               D => D.Id,
+            //                               E => E.DeptId,
+            //                               (D, Employees) => new
+            //                               {
+            //                                   DeptName = D.DeptName,
+            //                                   Employees = Employees
+            //                               }
+            //                    );
+            //Result = from D in dbContext.Set<Department>()
+            //         join E in dbContext.Set<Employee>()
+            //         on D.Id equals E.DeptId into EmployeesGroup
+            //         select new
+            //         {
+            //             DeptName = D.DeptName,
+            //             Employees = EmployeesGroup
+            //         };
 
-            foreach (var group in Result)
-            {
-                Console.WriteLine($"Department Name = {group.DeptName}");
-                foreach (var emp in group.Employees)
-                {
-                    Console.WriteLine($"\tEmployee Name = {emp.Name}");
-                }
-                Console.WriteLine("===================================");
-            }
+            //foreach (var group in Result)
+            //{
+            //    Console.WriteLine($"Department Name = {group.DeptName}");
+            //    foreach (var emp in group.Employees)
+            //    {
+            //        Console.WriteLine($"\tEmployee Name = {emp.Name}");
+            //    }
+            //    Console.WriteLine("===================================");
+            //}
 
             #endregion
+
+            #region EX02
+
+            //var Result = dbContext.Set<Department>()
+            //                    .GroupJoin(dbContext.Set<Employee>(),
+            //                               D => D.Id,
+            //                               E => E.DeptId,
+            //                               (D, Employees) => new
+            //                               {
+            //                                   DeptName = D.DeptName,
+            //                                   Employees = Employees
+            //                               }
+            //                    ).Where(E=>E.Employees.Count()>2);
+
+            //Result= from D in dbContext.Set<Department>()
+            //         join E in dbContext.Set<Employee>()
+            //         on D.Id equals E.DeptId into EmployeesGroup
+            //         where EmployeesGroup.Count() > 2
+            //         select new
+            //         {
+            //             DeptName = D.DeptName,
+            //             Employees = EmployeesGroup
+            //         };
+
+            //foreach (var group in Result)
+            //{
+            //    Console.WriteLine($"Department Name = {group.DeptName}");
+            //    foreach (var emp in group.Employees)
+            //    {
+            //        Console.WriteLine($"\tEmployee Name = {emp.Name}");
+            //    }
+            //    Console.WriteLine("===================================");
+            //}
+
+            #endregion
+
+
 
             #endregion
 
