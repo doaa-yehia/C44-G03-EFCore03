@@ -351,6 +351,35 @@ namespace Demo
 
             #endregion
 
+            #region Group Category Join()
+
+            #region EX01
+            //var DeptWithEmp = dbContext.Set<Department>()
+            //                           .Join(dbContext.Set<Employee>(),
+            //                                 D => D.DeptManagerId,
+            //                                 E => E.DeptId,
+            //                                 (D, E) => new
+            //                                 {
+            //                                     DeptName = D.DeptName,
+            //                                     EmpName = E.Name
+            //                                 }
+            //                           );
+            //DeptWithEmp = from D in dbContext.Set<Department>()
+            //              join E in dbContext.Set<Employee>()
+            //                on D.DeptManagerId equals E.DeptId
+            //                select new
+            //                {
+            //                    DeptName = D.DeptName,
+            //                    EmpName = E.Name
+            //                };
+
+            //foreach (var item in DeptWithEmp) Console.WriteLine(item);
+
+            #endregion
+
+
+
+            #endregion
 
         }
     }
