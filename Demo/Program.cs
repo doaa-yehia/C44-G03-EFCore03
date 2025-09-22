@@ -355,15 +355,27 @@ namespace Demo
 
             #region EX01
             //var DeptWithEmp = dbContext.Set<Department>()
-            //                           .Join(dbContext.Set<Employee>(),
-            //                                 D => D.DeptManagerId,
+            //                           .GroupJoin(dbContext.Set<Employee>(),
+            //                                 D => D.Id,
             //                                 E => E.DeptId,
-            //                                 (D, E) => new
+            //                                 (D, Employees) => new
             //                                 {
-            //                                     DeptName = D.DeptName,
-            //                                     EmpName = E.Name
-            //                                 }
-            //                           );
+            //                                     Department = D.Id,
+            //                                     Employees
+            //                                 } 
+            //                           ).SelectMany(X=>X.Employees);
+
+            var vDeptWithEmp = from D in dbContext.Set<Department>()
+                          join E in dbContext.Set<Employee>()
+                          on D.Id equals E.DeptId into Employees
+                          select new
+                          {
+                              Employees = Employees,
+                              D
+                          } into groups 
+                          select groups.Employees;
+
+
             //DeptWithEmp = from D in dbContext.Set<Department>()
             //              join E in dbContext.Set<Employee>()
             //                on D.DeptManagerId equals E.DeptId
@@ -377,6 +389,83 @@ namespace Demo
 
             #endregion
 
+            #region Left outer Join 
+
+            #region EX03
+            //var result = dbContext.Set<Department>()
+            //             .GroupJoin(dbContext.Set<Employee>(),
+            //                        D => D.Id,
+            //                        E => E.EmpId,
+            //                        (D, Employees) => new
+            //                        {
+            //                            Dept= D,
+            //                            Employees
+            //                        }
+            //             ).SelectMany(X => X.Employees.DefaultIfEmpty(), (D, emp) => new
+            //             {
+            //                 Dept = D.Dept.Id,
+            //                 EmpId = emp != null ? emp.EmpId : 0,
+            //                 EmpName = emp != null ? emp.Name : "No Employee"
+            //             });
+
+            // result = from D in dbContext.Set<Department>()
+            //              join E in dbContext.Set<Employee>()
+            //              on D.Id equals E.EmpId into Employees
+            //              select new
+            //              {
+            //                  Department = D,
+            //                  Employees
+            //              } into groups
+            //              from E in groups.Employees.DefaultIfEmpty()
+            //              select new 
+            //              {
+            //                  Department= groups.Department.Id,
+            //                  EmpId = E != null ? E.EmpId : 0,
+            //                  EmpName = E != null ? E.Name : "No Employee"
+            //              }; 
+            #endregion
+
+            #region EX04
+
+            //var result = dbContext.Set<Employee>()
+            //             .GroupJoin(dbContext.Set<Department>(),
+            //                        E => E.DeptId,
+            //                        D => D.Id,
+            //                        (E, Departments) => new
+            //                        {
+            //                            Employees=E,
+            //                            Departments
+            //                        }
+            //             ).SelectMany(X => X.Departments.DefaultIfEmpty(), (R, D) => new
+            //             {
+            //                 EmpId = R.Employees.EmpId,
+            //                 EmpName= R.Employees.Name,
+            //                 DeptId = D != null ? D.Id : 0,
+            //                 DeptName = D != null ? D.DeptName : "No Employee"
+            //             });
+            //result=from E in dbContext.Set<Employee>()
+            //        join D in dbContext.Set<Department>()
+            //        on E.DeptId equals D.Id into Departments
+            //        select new
+            //        {
+            //            Employees = E,
+            //            Departments
+            //        } into groups
+            //        from D in groups.Departments.DefaultIfEmpty()
+            //        select new
+            //        {
+            //            EmpId = groups.Employees.EmpId,
+            //            EmpName = groups.Employees.Name,
+            //            DeptId = D != null ? D.Id : 0,
+            //            DeptName = D != null ? D.DeptName : "No Department"
+            //        };
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            #endregion
+
+            #endregion
 
 
             #endregion
