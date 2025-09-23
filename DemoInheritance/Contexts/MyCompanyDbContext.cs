@@ -15,8 +15,19 @@ namespace DemoInheritance.Contexts
             optionsBuilder.UseSqlServer("Server=.;Database=MyCompanyDb;Trusted_Connection=true;TrustServerCertificate=true;");
         }
 
-        public DbSet<FullTimeEmployee> FullTimeEmployees { get; set; }
-        public DbSet<PartTimeEmployee> PartTimeEmployees { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+           modelBuilder.Entity<Employee>()
+                        .HasDiscriminator<int>("EmployeeType")
+                        .HasValue<FullTimeEmployee>(1)
+                        .HasValue<PartTimeEmployee>(2)
+                        .HasValue<Employee>(0);
+
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(MyCompanyDbContext).Assembly);
+        }
+
+        //public DbSet<FullTimeEmployee> FullTimeEmployees { get; set; }
+        //public DbSet<PartTimeEmployee> PartTimeEmployees { get; set; }
     }
 
 }

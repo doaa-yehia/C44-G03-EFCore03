@@ -1,4 +1,5 @@
 ﻿using DemoInheritance.Contexts;
+using DemoInheritance.Models;
 
 namespace DemoInheritance
 {
@@ -33,7 +34,44 @@ namespace DemoInheritance
             //dbContext.SaveChanges(); 
             #endregion
 
+            #region TPH
 
+            //var fullTimeEmployee = new Models.FullTimeEmployee
+            //{
+            //    Name = "Ahmed Ali",
+            //    Aged = 30,
+            //    Address = "123 Main",
+            //    Salary = 60000m,
+            //    StartDate = DateTime.Now
+            //};
+
+            
+
+            //var partTimeEmployee = new Models.PartTimeEmployee
+            //{
+            //    Name = "Sama Mohamed",
+            //    Aged = 25,
+            //    Address = "456 Elm St",
+            //    HourRate = 300m,
+            //    CountOfHours = 100
+
+            //};
+
+            //var employee = new Employee
+            //{
+            //    Name = "Salma",
+            //    Aged = 28,
+            //    Address = "Giza"
+            //};
+
+            //dbContext.Set<Employee>().Add(fullTimeEmployee);
+            //dbContext.Set<Employee>().Add(partTimeEmployee);
+            //dbContext.Set<Employee>().Add(employee);
+            //dbContext.SaveChanges(); 
+
+
+
+            #endregion
 
 
         }
