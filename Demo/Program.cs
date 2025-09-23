@@ -488,8 +488,12 @@ namespace Demo
 
             #endregion
 
+            #region Inheritance Mapping
 
-                #endregion
+
+
+            #endregion
+            #endregion
 
         }
     }
